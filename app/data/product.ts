@@ -13,7 +13,20 @@ export const products: Product[] = [
     stock: 120,
     etiqueta: 'Más Vendido',
     imagenUrl: '/images/camion-hero.png',
+    imagenes: ['/images/camion-hero.png', '/images/camion-hero.jpg.png'],
     descripcionCorta: 'Optimiza el rendimiento del motor con máxima filtración.',
+    descripcionCompleta: 'Este filtro de aire de competición está diseñado específicamente para motores Scania de alta performance. Fabricado con materiales de primera calidad que garantizan una filtración superior, prolongando la vida útil del motor y mejorando su rendimiento. Compatible con múltiples modelos de la Serie 4.',
+    categoria: 'Motor',
+    subcategoria: 'Filtros',
+    especificaciones: {
+      dimensiones: '320mm x 180mm x 85mm',
+      peso: '1.2kg',
+      material: 'Papel plisado de alta densidad',
+      numerosParte: ['1873018', '1873019', 'AF27840'],
+      garantia: '12 meses'
+    },
+    codigoBarras: '7891234567890',
+    fechaIngreso: '2024-10-01'
   },
   {
     id: 'DISC-FRE-VOLFH',
@@ -24,7 +37,20 @@ export const products: Product[] = [
     stock: 35,
     etiqueta: 'Oferta',
     imagenUrl: '/images/camion-hero.png',
+    imagenes: ['/images/camion-hero.png', '/images/camion-hero.jpg.png'],
     descripcionCorta: 'Máxima seguridad y durabilidad para tu sistema de frenos.',
+    descripcionCompleta: 'Kit completo de discos de freno ventilados para eje delantero, diseñados específicamente para camiones Volvo FH y FM. Fabricados en hierro fundido de alta calidad con tecnología de ventilación avanzada que garantiza una disipación óptima del calor. Incluye todos los componentes necesarios para una instalación profesional.',
+    categoria: 'Sistema de Frenos',
+    subcategoria: 'Discos',
+    especificaciones: {
+      dimensiones: '430mm de diámetro x 45mm de grosor',
+      peso: '18kg (por disco)',
+      material: 'Hierro fundido G3000',
+      numerosParte: ['85103803', '85103804', '20569131'],
+      garantia: '24 meses'
+    },
+    codigoBarras: '7891234567891',
+    fechaIngreso: '2024-09-15'
   },
   {
     id: 'BOM-AGUA-CUMISX',

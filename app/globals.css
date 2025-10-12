@@ -6,3 +6,25 @@
   line-height: 1.1; /* Ajusta el interlineado si es necesario */
   overflow: hidden; /* La magia está acá: esconde las letras antes de que suban */
 }
+
+/* Estilos para el slider de precio */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #00BFFF;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.slider::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #00BFFF;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}

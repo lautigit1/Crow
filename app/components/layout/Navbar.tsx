@@ -4,10 +4,49 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useCart } from '../../context/CartContext'
+import CartDrawer from '../cart/CartDrawer'
+
+// Componente del ícono del carrito
+function CartIcon({ onClick }: { onClick: () => void }) {
+  const { getTotalItems } = useCart()
+  const totalItems = getTotalItems()
+
+  return (
+    <button 
+      onClick={onClick}
+      className="relative p-2 text-white hover:text-azul-electrico transition-colors duration-200"
+      aria-label={`Carrito de compras${totalItems > 0 ? ` (${totalItems} productos)` : ''}`}
+    >
+      <svg 
+        className="w-6 h-6" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
+        />
+      </svg>
+      {totalItems > 0 && (
+        <motion.span
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="absolute -top-1 -right-1 bg-rojo-potente text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+        >
+          {totalItems}
+        </motion.span>
+      )}
+    </button>
+  )
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,59 +73,57 @@ export default function Navbar() {
       }}
     >
       <nav className="container mx-auto flex h-24 items-center justify-between px-8">
-        <div className="text-3xl font-bold z-10">
+        {/* Logo */}
+        <div className="text-3xl font-bold">
           <Link 
             href="/" 
-            className="text-[#00BFFF] transition-opacity duration-300 hover:opacity-80"
+            className="text-azul-electrico transition-all duration-300 hover:text-blue-400 hover:drop-shadow-lg"
           >
             CrowRepuestos
           </Link>
         </div>
 
-        <ul
-          className="hidden items-center justify-center rounded-full border border-white/10 bg-dark-translucent p-1 shadow-lg md:flex"
-          onMouseLeave={() => setHoveredLink(null)}
-        >
+        {/* Enlaces centrales - ocultos en móvil */}
+        <ul className="hidden md:flex items-center space-x-8">
           {links.map((link) => (
-            <li
-              key={link.href}
-              className="relative px-5 py-2"
-              onMouseEnter={() => setHoveredLink(link.href)}
-            >
-              <Link href={link.href} className="relative z-10 text-gray-300 transition-colors duration-300 hover:text-white">
+            <li key={link.href}>
+              <Link 
+                href={link.href} 
+                className="text-gray-300 hover:text-white transition-colors duration-300 font-medium"
+              >
                 {link.label}
               </Link>
-              {hoveredLink === link.href && (
-                <motion.div
-                  className="absolute inset-0 z-0 rounded-full bg-azul-electrico"
-                  layoutId="hover-pill"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                />
-              )}
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-4 z-10">
+        {/* Sección derecha */}
+        <div className="flex items-center space-x-3">
+          {/* Barra de búsqueda - solo desktop */}
           <input
             type="text"
-            placeholder="Buscar..."
-            className="hidden lg:block w-48 rounded-full border border-white/10 bg-dark-translucent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 focus:w-64 focus:border-azul-electrico focus:outline-none focus:ring-2 focus:ring-blue-glow"
+            placeholder="Buscar repuestos..."
+            className="hidden xl:block w-48 rounded-full border border-white/20 bg-zinc-900/80 px-4 py-2 text-sm text-white placeholder-gray-400 transition-all duration-300 focus:w-56 focus:border-azul-electrico focus:outline-none"
           />
-          {/* ¡ACÁ ESTÁ EL CAMBIO! Agregamos target y rel */}
+          
+          {/* Carrito */}
+          <CartIcon onClick={() => setCartDrawerOpen(true)} />
+          
+          {/* Botón catálogo */}
           <Link 
-            href="/productos" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block bg-rojo-potente text-white font-bold px-6 py-2 rounded-full shadow-neon-red transition-transform duration-300 hover:scale-105 active:scale-95"
+            href="/products" 
+            className="bg-rojo-potente text-white font-semibold px-5 py-2 rounded-full transition-all duration-300 hover:bg-red-600 text-sm"
           >
             Catálogo
           </Link>
         </div>
       </nav>
+
+      {/* Cart Drawer */}
+      <CartDrawer 
+        isOpen={cartDrawerOpen} 
+        onClose={() => setCartDrawerOpen(false)} 
+      />
     </motion.header>
   )
 }

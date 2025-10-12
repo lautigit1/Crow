@@ -1,16 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { Product } from '../../types/product';
+import { useCart } from '../../context/CartContext';
 
 type ProductCardProps = {
   product: Product;
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
+  const [isAdding, setIsAdding] = useState(false);
+
   // Función para formatear el precio a moneda argentina
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
@@ -18,6 +22,18 @@ export default function ProductCard({ product }: ProductCardProps) {
       currency: 'ARS',
       minimumFractionDigits: 2,
     }).format(price);
+  };
+
+  const handleQuickAdd = async (e: React.MouseEvent) => {
+    e.preventDefault(); // Previene la navegación del Link padre
+    e.stopPropagation();
+    
+    if (product.stock === 0 || isAdding) return;
+    
+    setIsAdding(true);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    addToCart(product, 1);
+    setIsAdding(false);
   };
 
   // Animación de aparición para cada tarjeta
@@ -76,17 +92,55 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-gray-400 text-sm mb-1">{product.marca} - {product.modeloCompatible}</p>
         <p className="text-gray-500 text-xs mb-3 truncate">{product.descripcionCorta}</p>
 
-        <div className="mt-auto flex items-end justify-between pt-4 border-t border-white/5">
-          <span className="text-2xl font-extrabold text-azul-electrico">
-            {formatPrice(product.precio)}
-          </span>
-          <Link 
-            href={`/products/${product.id}`}
-            className="bg-rojo-potente text-white px-5 py-2 rounded-full font-bold text-sm
-                       transition-all duration-300 hover:scale-105 hover:bg-red-700 shadow-md"
-          >
-            Ver Más
-          </Link>
+        <div className="mt-auto pt-4 border-t border-white/5 space-y-3">
+          <div className="flex items-end justify-between">
+            <span className="text-2xl font-extrabold text-azul-electrico">
+              {formatPrice(product.precio)}
+            </span>
+            <span className={`text-sm font-medium ${
+              product.stock === 0 
+                ? 'text-red-400' 
+                : product.stock < 10 
+                  ? 'text-yellow-400' 
+                  : 'text-green-400'
+            }`}>
+              {product.stock === 0 ? 'Agotado' : `Stock: ${product.stock}`}
+            </span>
+          </div>
+          
+          <div className="flex gap-2">
+            <button
+              onClick={handleQuickAdd}
+              disabled={product.stock === 0 || isAdding}
+              className="flex-1 bg-azul-electrico text-black px-4 py-2 rounded-full font-bold text-sm
+                         transition-all duration-300 hover:scale-105 hover:bg-blue-400 shadow-md
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
+                         flex items-center justify-center space-x-1"
+            >
+              {isAdding ? (
+                <>
+                  <div className="w-3 h-3 border border-black border-t-transparent rounded-full animate-spin"></div>
+                  <span>...</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span>Agregar</span>
+                </>
+              )}
+            </button>
+            
+            <Link 
+              href={`/products/${product.id}`}
+              className="bg-rojo-potente text-white px-5 py-2 rounded-full font-bold text-sm
+                         transition-all duration-300 hover:scale-105 hover:bg-red-700 shadow-md
+                         flex items-center justify-center"
+            >
+              Ver Más
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>

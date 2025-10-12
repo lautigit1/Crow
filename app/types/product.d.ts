@@ -11,4 +11,35 @@ export type Product = {
   etiqueta?: 'Oferta' | 'Más Vendido' | 'Novedad' | 'Pocas Unidades' | null; // Opcional, para destacar
   imagenUrl: string; // Ruta a la imagen del repuesto
   descripcionCorta: string; // Un resumen de 1-2 líneas
+  // Nuevos campos para página de detalle
+  imagenes?: string[]; // Múltiples imágenes para galería
+  descripcionCompleta?: string; // Descripción detallada
+  especificaciones?: {
+    dimensiones?: string;
+    peso?: string;
+    material?: string;
+    numerosParte?: string[];
+    garantia?: string;
+  };
+  categoria?: string;
+  subcategoria?: string;
+  codigoBarras?: string;
+  fechaIngreso?: string;
+};
+
+// Tipo para el carrito
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
+
+// Tipo para el contexto del carrito
+export type CartContextType = {
+  items: CartItem[];
+  addToCart: (product: Product, quantity?: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  clearCart: () => void;
+  getTotalItems: () => number;
+  getTotalPrice: () => number;
 };
