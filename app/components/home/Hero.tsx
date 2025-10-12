@@ -1,3 +1,4 @@
+// app/components/home/Hero.tsx
 'use client'
 
 import React from 'react'
@@ -38,13 +39,11 @@ const AnimatedText = ({ text }: { text: string }) => {
 }
 
 export default function Hero() {
-  // Variante para los elementos que solo entran
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.2, 0.6, 0.3, 0.9] } },
   }
   
-  // CAMBIO: Variante especial para el botón que entra Y después late
   const ctaVariants: Variants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
@@ -52,7 +51,6 @@ export default function Hero() {
       y: 0,
       scale: 1,
       transition: {
-        // Transición para la entrada inicial
         duration: 0.7,
         ease: [0.2, 0.6, 0.3, 0.9],
         delay: 2.0,
@@ -62,7 +60,6 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black text-white">
-      {/* Imagen de Fondo con Overlay y Animación */}
       <div className="absolute inset-0 z-0">
         <motion.div 
           className="h-full w-full"
@@ -72,18 +69,17 @@ export default function Hero() {
         >
           <Image
             src="/images/camion-hero.png"
-            alt="Camión moderno en carretera al amanecer"
+            alt="Camión de carga imponente al amanecer"
             fill
             style={{ objectFit: 'cover' }}
             quality={90}
             priority
-            className="filter brightness-30 contrast-125"
+            className="filter brightness-60 contrast-125"
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-60"></div>
       </div>
 
-      {/* Contenido Principal */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-8 max-w-5xl mx-auto">
         <AnimatedText text="POTENCIA Y TECNOLOGÍA EN CADA REPUESTO" />
 
@@ -115,7 +111,6 @@ export default function Hero() {
           </button>
         </motion.div>
 
-        {/* CAMBIO: Usamos la nueva variante y agregamos la animación de pulso aparte */}
         <motion.div
           className="mt-12"
           variants={ctaVariants}
@@ -123,7 +118,6 @@ export default function Hero() {
           animate="visible"
         >
           <motion.div
-            // El pulso lo ponemos en un div hijo para no entrar en conflicto
             animate={{
               scale: [1, 1.03, 1],
               boxShadow: [
@@ -136,12 +130,27 @@ export default function Hero() {
               duration: 3,
               repeat: Infinity,
               ease: 'easeInOut',
-              delay: 3, // Que empiece a latir 3 segundos después de aparecer
+              delay: 3,
             }}
           >
-            <Link href="/productos" className="inline-block bg-rojo-potente text-white text-xl font-extrabold px-10 py-5 rounded-full shadow-neon-red transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden group">
+            {/* ¡ACÁ SACAMOS EL target y rel! */}
+            <Link 
+              href="/products" 
+              scroll={false}
+              prefetch={true}
+              className="inline-block bg-rojo-potente text-white text-xl font-extrabold px-10 py-5 rounded-full shadow-neon-red transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden group focus:outline-none focus:ring-4 focus:ring-red-500/50"
+            >
               <span className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10">EXPLORAR CATÁLOGO <span className="ml-2 text-xl">&#x2192;</span></span>
+              <span className="relative z-10 flex items-center">
+                EXPLORAR CATÁLOGO 
+                <motion.span 
+                  className="ml-2 text-xl"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                >
+                  &#x2192;
+                </motion.span>
+              </span>
             </Link>
           </motion.div>
         </motion.div>

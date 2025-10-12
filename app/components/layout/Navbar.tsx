@@ -1,3 +1,4 @@
+// app/components/layout/Navbar.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -33,7 +34,6 @@ export default function Navbar() {
       }}
     >
       <nav className="container mx-auto flex h-24 items-center justify-between px-8">
-        {/* Logo */}
         <div className="text-3xl font-bold z-10">
           <Link 
             href="/" 
@@ -43,7 +43,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Links de Navegación con animación de "píldora" */}
         <ul
           className="hidden items-center justify-center rounded-full border border-white/10 bg-dark-translucent p-1 shadow-lg md:flex"
           onMouseLeave={() => setHoveredLink(null)}
@@ -71,15 +70,19 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Buscador y Botón de Acción */}
         <div className="flex items-center gap-4 z-10">
           <input
             type="text"
             placeholder="Buscar..."
             className="hidden lg:block w-48 rounded-full border border-white/10 bg-dark-translucent px-4 py-2 text-white placeholder-gray-400 transition-all duration-300 focus:w-64 focus:border-azul-electrico focus:outline-none focus:ring-2 focus:ring-blue-glow"
           />
-          {/* ¡ACÁ ESTÁ EL CAMBIO! Antes decía "/catalogo" */}
-          <Link href="/productos" className="inline-block bg-rojo-potente text-white font-bold px-6 py-2 rounded-full shadow-neon-red transition-transform duration-300 hover:scale-105 active:scale-95">
+          {/* ¡ACÁ ESTÁ EL CAMBIO! Agregamos target y rel */}
+          <Link 
+            href="/productos" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block bg-rojo-potente text-white font-bold px-6 py-2 rounded-full shadow-neon-red transition-transform duration-300 hover:scale-105 active:scale-95"
+          >
             Catálogo
           </Link>
         </div>
