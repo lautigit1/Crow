@@ -36,6 +36,9 @@ export type CartItem = {
 // Tipo para el contexto del carrito
 export type CartContextType = {
   items: CartItem[];
+  isCartOpen: boolean; // <--- AÑADIDO
+  openCart: () => void; // <--- AÑADIDO
+  closeCart: () => void; // <--- AÑADIDO
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;

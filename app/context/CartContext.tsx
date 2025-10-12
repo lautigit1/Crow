@@ -1,6 +1,7 @@
+// app/context/CartContext.tsx
 'use client';
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Product, CartItem, CartContextType } from '../types/product';
 
@@ -12,7 +13,7 @@ type CartAction =
   | { type: 'CLEAR_CART' }
   | { type: 'LOAD_CART'; items: CartItem[] };
 
-// Reducer para manejar el estado del carrito
+// Reducer para manejar el estado del carrito (sin cambios)
 function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
   switch (action.type) {
     case 'ADD_TO_CART': {
@@ -61,6 +62,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 // Provider del carrito
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, dispatch] = useReducer(cartReducer, []);
+  const [isCartOpen, setIsCartOpen] = useState(false); // <--- NUEVO ESTADO PARA VISIBILIDAD
 
   // Cargar carrito desde localStorage al iniciar
   useEffect(() => {
@@ -81,6 +83,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   // Funciones del carrito
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
   const addToCart = (product: Product, quantity = 1) => {
     dispatch({ type: 'ADD_TO_CART', product, quantity });
     toast.success(`${product.nombre} añadido al carrito`, {
@@ -123,6 +128,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const value: CartContextType = {
     items,
+    isCartOpen,
+    openCart,
+    closeCart,
     addToCart,
     removeFromCart,
     updateQuantity,

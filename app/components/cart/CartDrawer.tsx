@@ -42,7 +42,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               console.log('Overlay clicked - closing cart');
               onClose();
             }}
-            className="fixed inset-0 bg-black/60 cursor-pointer"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
             style={{ 
               zIndex: 9998,
               pointerEvents: 'auto'
@@ -64,14 +64,19 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               console.log('Drawer clicked - not closing');
               e.stopPropagation();
             }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-gradient-to-b from-zinc-900 to-black border-l border-zinc-600/50 flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 h-full w-full max-w-md border-l border-white/20 flex flex-col shadow-2xl backdrop-blur-xl"
             style={{
               zIndex: 9999,
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900 casi opaco
+              backgroundImage: 'linear-gradient(135deg, rgba(39, 39, 42, 0.9), rgba(24, 24, 27, 0.95))',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              isolation: 'isolate'
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-zinc-600/50">
+            <div className="flex items-center justify-between p-6 border-b border-white/10 backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-azul-electrico to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-azul-electrico/30">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +103,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             <div className="flex-1 flex flex-col">
               {items.length === 0 ? (
                 <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-                  <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mb-4 shadow-lg">
                     <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
                     </svg>
@@ -117,7 +122,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   {/* Products List */}
                   <div className="flex-1 overflow-y-auto p-4 space-y-4">
                     {items.map((item: CartItem) => (
-                      <div key={item.product.id} className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg">
+                      <div key={item.product.id} className="flex items-center gap-3 p-3 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 shadow-lg">
                         {/* Image */}
                         <div className="relative w-12 h-12 bg-zinc-700 rounded overflow-hidden flex-shrink-0">
                           <Image
@@ -164,7 +169,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   </div>
 
                   {/* Footer */}
-                  <div className="border-t border-zinc-700 p-6 space-y-4">
+                  <div className="border-t border-white/10 p-6 space-y-4 backdrop-blur-sm">
                     {/* Summary */}
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
