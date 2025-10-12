@@ -48,7 +48,15 @@ export default function ProductsPage() {
   }, [searchTerm, selectedCategory, selectedBrand, priceRange, sortBy]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-zinc-900 to-black text-white">
+    <main className="relative min-h-screen text-white bg-gradient-to-b from-[#0b1020] via-[#0a0f1a] to-black">
+      {/* Fondo decorativo con gradientes y cuadrícula sutil */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-40 -left-24 h-[44rem] w-[44rem] rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_center,_#00BFFF_0%,_rgba(0,191,255,0)_60%)]" />
+        <div className="absolute top-1/3 -right-40 h-[40rem] w-[40rem] rounded-full blur-3xl opacity-20 bg-[radial-gradient(circle_at_center,_#7c3aed_0%,_rgba(124,58,237,0)_60%)]" />
+        <div className="absolute bottom-[-20rem] left-1/2 -translate-x-1/2 h-[70rem] w-[70rem] opacity-10 bg-[radial-gradient(ellipse_at_center,_rgba(0,191,255,0.35),_transparent_60%)]" />
+        <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px]" />
+      </div>
+
       <div className="container mx-auto px-4 pt-32 pb-8">
         {/* Header con estilo mejorado */}
         <motion.div
@@ -68,7 +76,7 @@ export default function ProductsPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl lg:text-7xl font-extrabold mb-6 relative"
           >
-            <span className="bg-gradient-to-r from-azul-electrico via-blue-400 to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-azul-electrico via-blue-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,191,255,0.25)]">
               Catálogo
             </span>
             <br />
@@ -118,7 +126,7 @@ export default function ProductsPage() {
                 placeholder="Buscar repuestos por nombre o descripción..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-8 py-6 bg-gradient-to-r from-zinc-800/80 to-zinc-900/80 border border-zinc-600 rounded-2xl text-white text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300 shadow-lg backdrop-blur-sm"
+                className="w-full px-8 py-6 bg-gradient-to-r from-[#0d1a2b]/70 to-[#0b1624]/70 border border-azul-electrico/20 rounded-2xl text-white text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300 shadow-[0_0_18px_rgba(0,191,255,0.08)] backdrop-blur-md"
               />
               <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
                 <svg className="w-6 h-6 text-azul-electrico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +137,7 @@ export default function ProductsPage() {
           </div>
 
           {/* Filtros avanzados */}
-          <div className="bg-gradient-to-r from-zinc-900/50 to-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-6 max-w-7xl mx-auto">
+          <div className="bg-gradient-to-r from-[#0f172a]/60 to-[#0b1220]/60 backdrop-blur-md border border-azul-electrico/20 rounded-2xl p-6 max-w-7xl mx-auto shadow-[0_0_30px_rgba(0,191,255,0.06)]">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <svg className="w-5 h-5 text-azul-electrico" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
@@ -144,7 +152,7 @@ export default function ProductsPage() {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-3 bg-zinc-800/70 border border-zinc-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300"
+                  className="w-full px-4 py-3 bg-[#0d1a2b]/60 border border-azul-electrico/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300 backdrop-blur-sm"
                 >
                   {categories.map((category, index) => (
                     <option key={`category-${index}-${category}`} value={category}>{category}</option>
@@ -158,7 +166,7 @@ export default function ProductsPage() {
                 <select
                   value={selectedBrand}
                   onChange={(e) => setSelectedBrand(e.target.value)}
-                  className="w-full px-4 py-3 bg-zinc-800/70 border border-zinc-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300"
+                  className="w-full px-4 py-3 bg-[#0d1a2b]/60 border border-azul-electrico/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300 backdrop-blur-sm"
                 >
                   {brands.map((brand, index) => (
                     <option key={`brand-${index}-${brand}`} value={brand}>{brand}</option>
@@ -172,7 +180,7 @@ export default function ProductsPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-4 py-3 bg-zinc-800/70 border border-zinc-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300"
+                  className="w-full px-4 py-3 bg-[#0d1a2b]/60 border border-azul-electrico/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-azul-electrico focus:border-azul-electrico transition-all duration-300 backdrop-blur-sm"
                 >
                   <option value="name">Nombre A-Z</option>
                   <option value="price-low">Precio: Menor a Mayor</option>
@@ -191,9 +199,9 @@ export default function ProductsPage() {
                     step="10000"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                    className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer slider"
+                    className="w-full h-2 bg-[#0d1a2b] rounded-lg appearance-none cursor-pointer slider"
                     style={{
-                      background: `linear-gradient(to right, #00BFFF 0%, #00BFFF ${(priceRange[1] / 500000) * 100}%, #3f3f46 ${(priceRange[1] / 500000) * 100}%, #3f3f46 100%)`
+                      background: `linear-gradient(to right, #00BFFF 0%, #00BFFF ${(priceRange[1] / 500000) * 100}%, rgba(255,255,255,0.08) ${(priceRange[1] / 500000) * 100}%, rgba(255,255,255,0.08) 100%)`
                     }}
                   />
                   <div className="flex justify-between text-xs text-gray-400">

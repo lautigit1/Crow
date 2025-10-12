@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
-import CartDrawer from '../cart/CartDrawer'
 
 // Componente del ícono del carrito
 function CartIcon({ onClick }: { onClick: () => void }) {
@@ -13,23 +12,29 @@ function CartIcon({ onClick }: { onClick: () => void }) {
   const totalItems = getTotalItems()
 
   return (
-    <button 
+    <motion.button
       onClick={onClick}
-      className="relative p-2 text-white hover:text-azul-electrico transition-colors duration-200"
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.96 }}
+      className="group relative p-2 text-azul-electrico transition-all duration-200 rounded-lg hover:bg-zinc-800/50 hover:ring-2 hover:ring-azul-electrico/50"
       aria-label={`Carrito de compras${totalItems > 0 ? ` (${totalItems} productos)` : ''}`}
     >
-      <svg 
-        className="w-6 h-6" 
-        fill="none" 
-        stroke="currentColor" 
+      <svg
+        className="w-6 h-6"
         viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          strokeWidth={2} 
-          d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
-        />
+        {/* Carrito moderno estilo outline */}
+        <path d="M2.25 2.25h1.386c.51 0 .955.343 1.087.835l.383 1.437" />
+        <path d="M6.116 4.5h13.384c.72 0 1.236.67 1.065 1.37l-1.755 7.02a1.125 1.125 0 01-1.095.86H7.5" />
+        <path d="M7.5 14.25L5.477 4.522" />
+        <path d="M4.5 12.75H3.375" />
+        <circle cx="15.75" cy="19.5" r="1.125" />
+        <circle cx="9" cy="19.5" r="1.125" />
       </svg>
       {totalItems > 0 && (
         <motion.span
@@ -40,13 +45,13 @@ function CartIcon({ onClick }: { onClick: () => void }) {
           {totalItems}
         </motion.span>
       )}
-    </button>
+    </motion.button>
   )
 }
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
+  const { openCart } = useCart()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +82,7 @@ export default function Navbar() {
         <div className="text-3xl font-bold">
           <Link 
             href="/" 
-            className="text-azul-electrico transition-all duration-300 hover:text-blue-400 hover:drop-shadow-lg"
+            className="text-azul-electrico logo-electric transition-all duration-300 logo-glow"
           >
             CrowRepuestos
           </Link>
@@ -107,7 +112,7 @@ export default function Navbar() {
           />
           
           {/* Carrito */}
-          <CartIcon onClick={() => setCartDrawerOpen(true)} />
+            <CartIcon onClick={openCart} />
           
           {/* Botón catálogo */}
           <Link 
@@ -119,11 +124,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Cart Drawer */}
-      <CartDrawer 
-        isOpen={cartDrawerOpen} 
-        onClose={() => setCartDrawerOpen(false)} 
-      />
+  {/* Cart Drawer movido a ClientLayout */}
     </motion.header>
   )
 }

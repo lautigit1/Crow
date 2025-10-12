@@ -4,9 +4,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import Navbar from './components/layout/Navbar'
-import Footer from './components/layout/Footer'
 import { CartProvider } from './context/CartContext'
+import ClientLayout from './ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,9 +23,9 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <CartProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <ClientLayout>
+            {children}
+          </ClientLayout>
           <Toaster 
             position="top-right"
             toastOptions={{

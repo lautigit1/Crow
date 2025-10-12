@@ -42,10 +42,15 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               console.log('Overlay clicked - closing cart');
               onClose();
             }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
             style={{ 
               zIndex: 9998,
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              left: '-2px',
+              right: '-2px',
+              top: '-2px',
+              bottom: '-2px',
+              borderRadius: 0
             }}
           />
 
@@ -64,23 +69,25 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               console.log('Drawer clicked - not closing');
               e.stopPropagation();
             }}
-            className="fixed top-0 right-0 h-full w-full max-w-md border-l border-white/20 flex flex-col shadow-2xl backdrop-blur-xl"
+            className="fixed top-0 right-0 h-full w-full max-w-md flex flex-col shadow-2xl bg-zinc-800"
             style={{
               zIndex: 9999,
               pointerEvents: 'auto',
-              backgroundColor: 'rgba(24, 24, 27, 0.95)', // zinc-900 casi opaco
-              backgroundImage: 'linear-gradient(135deg, rgba(39, 39, 42, 0.9), rgba(24, 24, 27, 0.95))',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              backgroundColor: 'rgb(39, 39, 42)', // zinc-800 sólido
               isolation: 'isolate'
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10 backdrop-blur-sm">
+            <div className="flex items-center justify-between p-6 bg-zinc-800">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-azul-electrico to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-azul-electrico/30">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2.25 2.25h1.386c.51 0 .955.343 1.087.835l.383 1.437" />
+                    <path d="M6.116 4.5h13.384c.72 0 1.236.67 1.065 1.37l-1.755 7.02a1.125 1.125 0 01-1.095.86H7.5" />
+                    <path d="M7.5 14.25L5.477 4.522" />
+                    <path d="M4.5 12.75H3.375" />
+                    <circle cx="15.75" cy="19.5" r="1.125" />
+                    <circle cx="9" cy="19.5" r="1.125" />
                   </svg>
                 </div>
                 <div>
@@ -90,7 +97,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-gray-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-all duration-200 hover:rotate-90"
+                className="p-2 text-gray-400 hover:text-white hover:bg-zinc-700 rounded-lg transition-all duration-200 hover:rotate-90"
                 aria-label="Cerrar carrito"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,9 +110,14 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             <div className="flex-1 flex flex-col">
               {items.length === 0 ? (
                 <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-                  <div className="w-16 h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                  <div className="w-16 h-16 bg-zinc-700 border border-zinc-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                    <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2.25 2.25h1.386c.51 0 .955.343 1.087.835l.383 1.437" />
+                      <path d="M6.116 4.5h13.384c.72 0 1.236.67 1.065 1.37l-1.755 7.02a1.125 1.125 0 01-1.095.86H7.5" />
+                      <path d="M7.5 14.25L5.477 4.522" />
+                      <path d="M4.5 12.75H3.375" />
+                      <circle cx="15.75" cy="19.5" r="1.125" />
+                      <circle cx="9" cy="19.5" r="1.125" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">Tu carrito está vacío</h3>
@@ -122,9 +134,9 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   {/* Products List */}
                   <div className="flex-1 overflow-y-auto p-4 space-y-4">
                     {items.map((item: CartItem) => (
-                      <div key={item.product.id} className="flex items-center gap-3 p-3 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 shadow-lg">
+                      <div key={item.product.id} className="flex items-center gap-3 p-3 bg-zinc-700 rounded-lg border border-zinc-600 shadow-lg">
                         {/* Image */}
-                        <div className="relative w-12 h-12 bg-zinc-700 rounded overflow-hidden flex-shrink-0">
+                        <div className="relative w-12 h-12 bg-zinc-600 rounded overflow-hidden flex-shrink-0">
                           <Image
                             src={item.product.imagenUrl}
                             alt={item.product.nombre}
@@ -169,7 +181,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   </div>
 
                   {/* Footer */}
-                  <div className="border-t border-white/10 p-6 space-y-4 backdrop-blur-sm">
+                  <div className="border-t border-zinc-700 p-6 space-y-4 bg-zinc-800">
                     {/* Summary */}
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
@@ -190,7 +202,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
                     {/* Shipping Message */}
                     {envioGratis && (
-                      <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-3 text-center">
+                      <div className="bg-green-600/20 rounded-lg p-3 text-center">
                         <p className="text-green-400 text-sm font-semibold">
                           ✨ ¡Envío gratis incluido!
                         </p>
@@ -198,7 +210,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     )}
 
                     {!envioGratis && (
-                      <div className="bg-amber-500/20 border border-amber-400/30 rounded-lg p-3 text-center">
+                      <div className="bg-amber-500/20 rounded-lg p-3 text-center">
                         <p className="text-amber-400 text-sm">
                           💰 Agrega {formatPrice(200000 - subtotal)} más para envío gratis
                         </p>

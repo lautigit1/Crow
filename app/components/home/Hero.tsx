@@ -23,7 +23,7 @@ const AnimatedText = ({ text }: { text: string }) => {
 
   return (
     <motion.h1
-      className="text-5xl md:text-7xl font-extrabold mb-4 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-azul-electrico animate-gradient text-reveal-container"
+      className="text-5xl md:text-7xl font-extrabold mb-4 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-azul-electrico animate-gradient text-reveal-container electric-glow"
       variants={container}
       initial="hidden"
       animate="visible"
