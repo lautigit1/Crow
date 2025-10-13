@@ -55,12 +55,30 @@ export default function ClientProductsPage() {
   }, [searchTerm, selectedCategory, selectedBrand, priceRange, sortBy]);
 
   return (
-    <main className="relative min-h-screen text-white bg-gradient-to-b from-[#0b1020] via-[#0a0f1a] to-black">
+    <main className="relative min-h-screen text-white bg-gradient-to-br from-[#0a0f1f] via-[#0c1428] to-[#081220]">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -left-24 h-[44rem] w-[44rem] rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_center,_#00BFFF_0%,_rgba(0,191,255,0)_60%)]" />
-        <div className="absolute top-1/3 -right-40 h-[40rem] w-[40rem] rounded-full blur-3xl opacity-20 bg-[radial-gradient(circle_at_center,_#7c3aed_0%,_rgba(124,58,237,0)_60%)]" />
-        <div className="absolute bottom-[-20rem] left-1/2 -translate-x-1/2 h-[70rem] w-[70rem] opacity-10 bg-[radial-gradient(ellipse_at_center,_rgba(0,191,255,0.35),_transparent_60%)]" />
-        <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px]" />
+        {/* Orbs principales más grandes y vibrantes */}
+        <div className="absolute -top-60 -left-60 h-[70rem] w-[70rem] rounded-full blur-3xl opacity-50 bg-[radial-gradient(circle_at_center,_#00BFFF_0%,_rgba(0,191,255,0.3)_30%,_rgba(0,191,255,0.1)_60%,_transparent_100%)]" />
+        <div className="absolute top-1/4 -right-60 h-[60rem] w-[60rem] rounded-full blur-3xl opacity-40 bg-[radial-gradient(circle_at_center,_#0099FF_0%,_rgba(0,153,255,0.25)_40%,_rgba(0,153,255,0.05)_70%,_transparent_100%)]" />
+        
+        {/* Orb central masivo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[100rem] w-[100rem] rounded-full blur-3xl opacity-10 bg-[radial-gradient(ellipse_at_center,_rgba(0,191,255,0.6)_0%,_rgba(0,191,255,0.2)_30%,_rgba(0,191,255,0.05)_60%,_transparent_100%)]" />
+        
+        {/* Grid pattern más sutil y elegante */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,rgba(0,191,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,191,255,0.2)_1px,transparent_1px)] bg-[size:80px_80px]" />
+        
+        {/* Orbs flotantes adicionales */}
+        <div className="absolute top-10 left-1/4 h-[40rem] w-[40rem] rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_center,_#00CCFF_0%,_rgba(0,204,255,0.15)_50%,_transparent_80%)]" />
+        <div className="absolute bottom-20 right-1/4 h-[45rem] w-[45rem] rounded-full blur-3xl opacity-25 bg-[radial-gradient(circle_at_center,_#0088CC_0%,_rgba(0,136,204,0.12)_60%,_transparent_90%)]" />
+        <div className="absolute top-2/3 left-10 h-[35rem] w-[35rem] rounded-full blur-3xl opacity-20 bg-[radial-gradient(circle_at_center,_#00AAFF_0%,_rgba(0,170,255,0.1)_70%,_transparent_100%)]" />
+        
+        {/* Líneas de conexión sutiles */}
+        <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-azul-electrico/10 to-transparent" />
+        <div className="absolute bottom-1/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/8 to-transparent" />
+        
+        {/* Efecto de profundidad con capas */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_transparent_0%,_rgba(0,0,0,0.1)_100%)]" />
       </div>
 
       <div className="container mx-auto px-4 pt-32 pb-8">
@@ -68,10 +86,9 @@ export default function ClientProductsPage() {
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-azul-electrico/5 rounded-full blur-3xl"></div>
           </div>
-          <motion.h1 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-5xl lg:text-7xl font-extrabold mb-6 relative">
-            <span className="bg-gradient-to-r from-azul-electrico via-blue-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,191,255,0.25)]">Catálogo</span>
-            <br />
-            <span className="bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">de Repuestos</span>
+          <motion.h1 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-5xl lg:text-7xl font-extrabold mb-6 relative px-6 py-3 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-azul-electrico animate-gradient electric-glow" style={{ backgroundSize: '200% auto' }}>
+            <span className="block pb-1">Catálogo</span>
+            <span className="block -mt-1">de Repuestos</span>
           </motion.h1>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="max-w-4xl mx-auto">
             <p className="text-xl lg:text-2xl text-gray-300 mb-4 leading-relaxed">Encontrá los mejores repuestos para camiones con garantía y envío a todo el país</p>

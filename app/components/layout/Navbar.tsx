@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import SearchResults from './SearchResults'
@@ -57,6 +58,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const { openCart } = useCart()
   const { user } = useAuth()
+  const pathname = usePathname()
   const [searchTerm, setSearchTerm] = useState('')
   const [results, setResults] = useState<Product[]>([])
   const [showResults, setShowResults] = useState(false)
@@ -64,6 +66,9 @@ export default function Navbar() {
   const searchRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
+
+  // Ocultar búsqueda en página de productos
+  const hideSearch = pathname === '/products'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,8 +175,9 @@ export default function Navbar() {
 
         {/* Sección derecha */}
         <div className="flex items-center space-x-3">
-          {/* Búsqueda con autocompletado */}
-          <div ref={searchRef} className="relative hidden xl:block">
+          {/* Búsqueda con autocompletado - Oculta en página de productos */}
+          {!hideSearch && (
+            <div ref={searchRef} className="relative hidden xl:block">
             <input
               ref={inputRef}
               type="text"
@@ -191,21 +197,24 @@ export default function Navbar() {
               query={searchTerm}
             />
           </div>
+          )}
 
-          {/* Botón de búsqueda mobile */}
-          <button
-            className="xl:hidden p-2 rounded-lg text-white hover:bg-zinc-800/50 hover:ring-2 hover:ring-white/40"
-            onClick={() => {
-              setMobileSearchOpen(true)
-              setTimeout(() => inputRef.current?.focus(), 0)
-            }}
-            aria-label="Abrir búsqueda"
-          >
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <path d="M21 21l-4.35-4.35" />
-            </svg>
-          </button>
+          {/* Botón de búsqueda mobile - También oculto en página de productos */}
+          {!hideSearch && (
+            <button
+              className="xl:hidden p-2 rounded-lg text-white hover:bg-zinc-800/50 hover:ring-2 hover:ring-white/40"
+              onClick={() => {
+                setMobileSearchOpen(true)
+                setTimeout(() => inputRef.current?.focus(), 0)
+              }}
+              aria-label="Abrir búsqueda"
+            >
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
+              </svg>
+            </button>
+          )}
           
           {/* Carrito */}
             <CartIcon onClick={openCart} />
@@ -260,8 +269,8 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Overlay de búsqueda mobile */}
-      {mobileSearchOpen && (
+      {/* Overlay de búsqueda mobile - Solo si no estamos en productos */}
+      {mobileSearchOpen && !hideSearch && (
         <div className="fixed inset-0 z-[70] bg-black/70 backdrop-blur-sm">
           <div className="absolute inset-x-0 top-0 p-4 flex items-center gap-2">
             <div ref={searchRef} className="relative flex-1">
