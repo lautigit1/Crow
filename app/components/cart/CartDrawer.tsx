@@ -226,6 +226,13 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       >
                         🛒 Ver Carrito Completo
                       </Link>
+                      <Link
+                        href="/checkout"
+                        onClick={onClose}
+                        className="block w-full cursor-pointer bg-azul-electrico text-black text-center py-4 rounded-xl font-bold hover:bg-blue-400 transition-colors"
+                      >
+                        ⚡ Proceder al Pago
+                      </Link>
                       <button
                         onClick={onClose}
                         className="block w-full border border-zinc-600 text-azul-electrico text-center py-3 rounded-xl font-semibold hover:border-azul-electrico hover:bg-azul-electrico/10 transition-colors"

@@ -227,9 +227,12 @@ export default function CartPage() {
                 </div>
 
                 {/* Botón proceder al pago */}
-                <button className="w-full bg-rojo-potente text-white px-6 py-4 rounded-xl font-bold text-lg mt-6 transition-all duration-300 hover:scale-105 hover:bg-red-700 shadow-lg hover:shadow-neon-red">
+                <Link
+                  href="/checkout"
+                  className="block w-full text-center cursor-pointer bg-rojo-potente text-white px-6 py-4 rounded-xl font-bold text-lg mt-6 transition-all duration-300 hover:scale-105 hover:bg-red-700 shadow-lg hover:shadow-neon-red"
+                >
                   Proceder al Pago
-                </button>
+                </Link>
 
                 {/* Continuar comprando */}
                 <Link

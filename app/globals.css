@@ -56,3 +56,23 @@
   color: #00BFFF !important;
   text-shadow: 0 0 8px rgba(0, 191, 255, 0.35), 0 0 18px rgba(0, 191, 255, 0.22);
 }
+
+/* Simple input utility */
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem; /* rounded-lg */
+  background-color: rgba(39, 39, 42, 0.6); /* zinc-800/60 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.input::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.6);
+  border-color: rgba(0, 191, 255, 0.6);
+}

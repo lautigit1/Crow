@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { CartProvider } from './context/CartContext'
+import { WishlistProvider } from './context/WishlistContext'
+import { AuthProvider } from './context/AuthContext'
 import ClientLayout from './ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,9 +25,13 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <CartProvider>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <AuthProvider>
+            <WishlistProvider>
+              <ClientLayout>
+                {children}
+              </ClientLayout>
+            </WishlistProvider>
+          </AuthProvider>
           <Toaster 
             position="top-right"
             toastOptions={{

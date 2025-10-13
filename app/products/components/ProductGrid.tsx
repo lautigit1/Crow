@@ -8,9 +8,10 @@ import { Product } from '../../types/product'
 
 interface ProductGridProps {
   products?: Product[]
+  highlightQuery?: string
 }
 
-export default function ProductGrid({ products = defaultProducts }: ProductGridProps) {
+export default function ProductGrid({ products = defaultProducts, highlightQuery }: ProductGridProps) {
   const [selectedCategory, setSelectedCategory] = useState('Todos')
   
   // Si se pasan productos filtrados, no aplicamos el filtro de categoría interno
@@ -67,7 +68,7 @@ export default function ProductGrid({ products = defaultProducts }: ProductGridP
       >
         {displayedProducts.length > 0 ? (
           displayedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} highlightQuery={highlightQuery} />
           ))
         ) : (
           <div className="col-span-full text-center py-12">

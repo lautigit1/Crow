@@ -6,12 +6,53 @@ import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { Product } from '../../types/product';
 import { useCart } from '../../context/CartContext';
+import FavoriteButton from '../../components/ui/FavoriteButton';
 
 type ProductCardProps = {
   product: Product;
+  highlightQuery?: string;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+function highlight(text: string, query?: string) {
+  if (!query || query.trim().length < 3) return text;
+  // Normalizar sin tildes para búsqueda, pero mantener el texto original al renderizar
+  const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const lowerText = normalize(text);
+  const lowerQuery = normalize(query);
+  const indexList: Array<{ start: number; end: number }> = [];
+
+  // Buscar todas las ocurrencias de la consulta normalizada en el texto normalizado
+  let startIndex = 0;
+  while (true) {
+    const idx = lowerText.indexOf(lowerQuery, startIndex);
+    if (idx === -1) break;
+    indexList.push({ start: idx, end: idx + lowerQuery.length });
+    startIndex = idx + lowerQuery.length;
+  }
+
+  if (indexList.length === 0) return text;
+
+  // Construir el resultado mezclando fragmentos originales y spans resaltados
+  const result: React.ReactNode[] = [];
+  let lastEnd = 0;
+  indexList.forEach((range, i) => {
+    if (range.start > lastEnd) {
+      result.push(text.slice(lastEnd, range.start));
+    }
+    result.push(
+      <span key={`hl-${i}-${range.start}`} className="text-azul-electrico font-semibold">{
+        text.slice(range.start, range.end)
+      }</span>
+    );
+    lastEnd = range.end;
+  });
+  if (lastEnd < text.length) {
+    result.push(text.slice(lastEnd));
+  }
+  return result;
+}
+
+export default function ProductCard({ product, highlightQuery }: ProductCardProps) {
   const { addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -83,13 +124,20 @@ export default function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="transition-transform duration-500 group-hover:scale-110"
         />
+        <div className="absolute top-2 right-2 z-10">
+          <FavoriteButton product={product} />
+        </div>
       </div>
 
       <div className="flex flex-col p-5 flex-grow">
         <h3 className="text-xl font-semibold text-white mb-2 leading-tight">
-          {product.nombre}
+          {highlight(product.nombre, highlightQuery)}
         </h3>
-        <p className="text-gray-400 text-sm mb-1">{product.marca} - {product.modeloCompatible}</p>
+        <p className="text-gray-400 text-sm mb-1">
+          {highlight(product.marca || '', highlightQuery)}
+          {product.modeloCompatible ? ' - ' : ''}
+          {highlight(product.modeloCompatible || '', highlightQuery)}
+        </p>
         <p className="text-gray-500 text-xs mb-3 truncate">{product.descripcionCorta}</p>
 
         <div className="mt-auto pt-4 border-t border-white/5 space-y-3">
@@ -112,14 +160,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               onClick={handleQuickAdd}
               disabled={product.stock === 0 || isAdding}
-              className="flex-1 bg-azul-electrico text-black px-4 py-2 rounded-full font-bold text-sm
+              className="flex-1 bg-azul-electrico text-white px-4 py-2 rounded-full font-bold text-sm
                          transition-all duration-300 hover:scale-105 hover:bg-blue-400 shadow-md
                          disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
                          flex items-center justify-center space-x-1"
             >
               {isAdding ? (
                 <>
-                  <div className="w-3 h-3 border border-black border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin"></div>
                   <span>...</span>
                 </>
               ) : (

@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useCart } from './context/CartContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -9,6 +10,10 @@ import CartDrawer from './components/cart/CartDrawer';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const { isCartOpen, closeCart } = useCart();
+  const pathname = usePathname();
+  
+  // Check if we're in the admin section
+  const isAdminRoute = pathname?.startsWith('/admin');
 
   // Lock scroll and enforce black background while cart is open to avoid edge artifacts
   useEffect(() => {
@@ -27,6 +32,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     };
   }, [isCartOpen]);
 
+  // If it's an admin route, render only the children (admin layout will handle its own structure)
+  if (isAdminRoute) {
+    return <>{children}</>;
+  }
+
+  // For non-admin routes, render the normal layout with navbar and footer
   return (
     <>
       <Navbar />
