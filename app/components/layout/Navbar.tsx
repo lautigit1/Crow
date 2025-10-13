@@ -257,14 +257,6 @@ export default function Navbar() {
               ⚙️
             </Link>
           )}
-
-          {/* Botón catálogo */}
-          <Link 
-            href="/products" 
-            className="bg-rojo-potente text-white font-semibold px-5 py-2 rounded-full transition-all duration-300 hover:bg-red-600 text-sm"
-          >
-            Catálogo
-          </Link>
         </div>
       </nav>
 
