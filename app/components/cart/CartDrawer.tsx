@@ -124,7 +124,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   <p className="text-gray-400 text-sm mb-4">Agrega productos para empezar a comprar</p>
                   <button
                     onClick={onClose}
-                    className="bg-azul-electrico text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors"
+                    className="bg-azul-electrico text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition-colors"
                   >
                     Continuar Comprando
                   </button>
@@ -229,7 +229,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <Link
                         href="/checkout"
                         onClick={onClose}
-                        className="block w-full cursor-pointer bg-azul-electrico text-black text-center py-4 rounded-xl font-bold hover:bg-blue-400 transition-colors"
+                        className="block w-full cursor-pointer bg-azul-electrico text-white text-center py-4 rounded-xl font-bold hover:bg-blue-400 transition-colors"
                       >
                         ⚡ Proceder al Pago
                       </Link>

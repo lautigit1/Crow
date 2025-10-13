@@ -128,7 +128,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/products"
-              className="inline-block bg-azul-electrico text-black px-8 py-3 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-neon-blue"
+              className="inline-block bg-azul-electrico text-white px-8 py-3 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-neon-blue"
             >
               Ver Catálogo
             </Link>
@@ -217,7 +217,7 @@ export default function CartPage() {
                       placeholder="Código postal"
                       className="flex-grow px-3 py-2 bg-zinc-700 border border-zinc-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-azul-electrico"
                     />
-                    <button className="px-4 py-2 bg-azul-electrico text-black rounded-lg font-medium hover:bg-blue-400 transition-colors">
+                    <button className="px-4 py-2 bg-azul-electrico text-white rounded-lg font-medium hover:bg-blue-400 transition-colors">
                       Calcular
                     </button>
                   </div>
