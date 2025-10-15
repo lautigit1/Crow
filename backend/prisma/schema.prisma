@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+// Models
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  password  String
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relations
+  orders    Order[]
+  addresses Address[]
+}
+
+model Product {
+  id                   String   @id @default(uuid())
+  nombre               String
+  marca                String
+  modeloCompatible     String?
+  precio               Decimal  @db.Decimal(10, 2)
+  stock                Int      @default(0)
+  imagenUrl            String?
+  descripcionCorta     String?
+  descripcionCompleta  String?
+  especificaciones     Json?
+  categoria            String
+  subcategoria         String?
+  codigoBarras         String?
+  fechaIngreso         DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  orderItems           OrderItem[]
+
+  @@index([nombre])
+  @@index([marca])
+  @@index([categoria])
+}
+
+model Order {
+  id        String       @id @default(uuid())
+  userId    String
+  total     Decimal      @db.Decimal(10, 2)
+  status    OrderStatus  @default(PENDING)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // Relations
+  user      User         @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  address   Address?
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Address {
+  id         String  @id @default(uuid())
+  userId     String
+  fullName   String
+  phone      String
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String
+  orderId    String? @unique
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id])
+  order  Order? @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+}
