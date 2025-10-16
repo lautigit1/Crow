@@ -19,10 +19,14 @@ async function bootstrap() {
   // Simple global error handler (placeholder) - real filter added in app module
   app.use(json({ limit: '1mb' }));
 
-  // CORS restricted to FRONTEND_ORIGIN if provided
-  const origin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:3000';
+  // CORS restricted to FRONTEND_ORIGIN; supports comma-separated list
+  const originEnv = process.env.FRONTEND_ORIGIN ?? 'http://localhost:3000';
+  const origins = originEnv
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
   app.enableCors({
-    origin,
+    origin: origins.length === 1 ? origins[0] : origins,
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
