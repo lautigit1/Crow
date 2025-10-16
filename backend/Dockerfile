@@ -21,11 +21,14 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs && adduser -S nestjs -u 1001
 
 # Copy only needed files
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/prisma ./prisma
 
+# Ensure proper permissions for non-root user
+RUN chown -R nestjs:nodejs /app
+
 USER nestjs
 EXPOSE 4000
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+CMD ["node", "dist/main.js"]
