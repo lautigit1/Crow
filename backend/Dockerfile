@@ -5,12 +5,12 @@ WORKDIR /app
 # ---- Dependencies ----
 FROM base AS deps
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 
 # ---- Build ----
 FROM base AS build
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npx prisma generate && npm run build
 
